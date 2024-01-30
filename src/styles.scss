@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #28a745 !important;
+}
+
+.main-container {
+    background-color: #f2f2f2;
+}
+
+
+.banner-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: #8dc1f9;
+    margin: 0;
+}
+
+.banner-text {
+    text-align: center;
+    align-self: center;
+}
+
+.banner-image {
+    max-width: 100%;
+    height: auto;
+}
