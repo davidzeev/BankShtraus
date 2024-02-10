@@ -1,25 +1,30 @@
 body {
-    background-color: #28a745 !important;
+    // background-color: #f2f2f2 !important;
+    background-color: #f8f8f8 !important;
+    // background-color: #28a745 !important;
 }
 
 .main-container {
-    background-color: #f2f2f2;
+    // background-color: #f2f2f2;
+    background-color: #f8f8f8;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: blue !important;
+}
 
-.banner-container {
-    display: flex;
-    justify-content: space-between;
-    background-color: #8dc1f9;
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
     margin: 0;
 }
 
-.banner-text {
-    text-align: center;
-    align-self: center;
-}
-
-.banner-image {
-    max-width: 100%;
-    height: auto;
+input {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }

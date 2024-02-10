@@ -1,2 +1,26 @@
-<h1> hello AppComponent </h1>
-<router-outlet></router-outlet>
+<header class="header" style=" background-image: url('assets/רקע.jpg');">
+    <div class="banner-left">
+        <img src="assets/בניין.webp" alt="Left Image" class="banner-image">
+    </div>
+
+    <div class="banner-text" style="height: 100%; width: 100%;">
+        <!-- <img src="assets/רקע.jpg" alt="background" style="height: 100%; width: 100%"> -->
+        <h1 class="withColor">בנק שטראוס</h1>
+    </div>
+
+    <div class="banner-right">
+        <img src="assets/בניין.webp" alt="Right Image" class="banner-image">
+    </div>
+
+</header>
+<div class="page-container">
+    <div class="content-wrap">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+<footer class="footer" id="footer" style="background-image: url('assets/רקע.jpg');">
+    <a href=""> דף הבית </a>
+    <pre class="mt-3"> | </pre>
+    <span> כל הזכויות שמורות © </span>
+</footer>
