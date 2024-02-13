@@ -28,5 +28,18 @@ input {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.icons {
+    width: 24px; // יש להגדיר את הרוחב והגובה כרצונך
+    height: 24px;
+}

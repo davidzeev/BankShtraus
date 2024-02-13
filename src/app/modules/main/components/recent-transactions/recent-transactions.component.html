@@ -1,28 +1,43 @@
 <h1> תנועות אחרונות בחשבון </h1>
+<mat-card>
+    <mat-card-header></mat-card-header>
+    <mat-card-content>
 
-<table mat-table [dataSource]="dataSource" matSort class="table table-striped">
+        <table mat-table [dataSource]="dataSource" matSort class="table table-striped mat-elevation-z8">
 
-    <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> תאריך </th>
-        <td mat-cell *matCellDef="let row"> {{row.date}} </td>
-    </ng-container>
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> תאריך </th>
+                <td mat-cell *matCellDef="let row"> {{row.date}} </td>
+            </ng-container>
 
-    <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> תיאור תנועה </th>
-        <td mat-cell *matCellDef="let row"> {{row.description}} </td>
-    </ng-container>
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> תיאור תנועה </th>
+                <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+            </ng-container>
 
-    <ng-container matColumnDef="rightsAndObligations">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> זכות/חובה </th>
-        <td mat-cell *matCellDef="let row"> {{row.rightsAndObligations | number}} </td>
-    </ng-container>
+            <ng-container matColumnDef="rightsAndObligations">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> זכות/חובה </th>
+                <td mat-cell *matCellDef="let row" [class.text-danger]="row.rightsAndObligations < 0"
+                    [class.text-success]="row.rightsAndObligations > 0">
+                    <label dir="ltr"> {{row.rightsAndObligations | number}} </label> ₪
+                </td>
+            </ng-container>
 
-    <ng-container matColumnDef="balance">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> יתרה </th>
-        <td mat-cell *matCellDef="let row"> {{row.balance | number}} </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+            <ng-container matColumnDef="balance">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> יתרה </th>
+                <td mat-cell *matCellDef="let row" [class.text-danger]="row.balance < 0"
+                    [class.text-success]="row.balance > 0">
+                    <label dir="ltr"> {{row.balance | number}} </label> ₪
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <button mat-raised-button color="primary" (click)="exportToExcel()">
+            <img src="assets/excel-icon.svg" class="icons" alt="Excel Icon">
+        </button>
 
-<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons></mat-paginator>
+
+    </mat-card-content>
+    <mat-card-footer></mat-card-footer>
+</mat-card>

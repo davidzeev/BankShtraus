@@ -9,6 +9,7 @@ import { BankTransferComponent } from './components/bank-transfer/bank-transfer.
 import { SharedModule } from '../shared/shared.module';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MyPaginatorIntl } from '../shared/general/myPaginatorIntl';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { MyPaginatorIntl } from '../shared/general/myPaginatorIntl';
     MainComponent,
     PersonalAreaComponent,
     RecentTransactionsComponent,
-    BankTransferComponent
+    BankTransferComponent,
+    HomeComponent,
   ],
   imports: [
     CommonModule,
