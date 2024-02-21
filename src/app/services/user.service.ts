@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { loginUser } from '../models/user.model';
+import { User, loginUser } from '../models/user.model';
 import { ApiService } from './api.service';
 import { Observable, tap } from 'rxjs';
 
@@ -8,12 +8,12 @@ import { Observable, tap } from 'rxjs';
 })
 export class UserService {
 
+  private user!: User;
   constructor(private ApiSrv: ApiService) { }
 
-  public login(loginUser: loginUser): Observable<any> {
-    console.log(loginUser);
+  public login(loginUser: loginUser): Observable<User> {
     return this.ApiSrv.login(loginUser).pipe(tap((resultData) => {
-      console.log(resultData);
+      this.user = resultData;
     }));
   }
 }

@@ -11,11 +11,11 @@
             </div>
             <br />
 
-            <label for="tzId">תעודת זהות (9 ספרות)</label>
-            <input class="form-control  " formControlName="tz" type="number" id="tz" name="tz"
-                [class.is-invalid]="submit && loginForm.get('tz')?.invalid">
-            <div class="invalid-feedback" id="errTz" *ngIf="submit && loginForm.get('tz')?.invalid">
-                <div *ngIf="loginForm.get('tz')?.errors?.['required']"> יש למלא תעודת זהות</div>
+            <label for="userId">תעודת זהות (9 ספרות)</label>
+            <input class="form-control  " formControlName="userId" type="number" id="userId" name="userId"
+                [class.is-invalid]="submit && loginForm.get('userId')?.invalid">
+            <div class="invalid-feedback" id="errUserId" *ngIf="submit && loginForm.get('userId')?.invalid">
+                <div *ngIf="loginForm.get('userId')?.errors?.['required']"> יש למלא תעודת זהות</div>
             </div>
 
             <br />
@@ -36,8 +36,8 @@
 <!-- AccountNumber	int	Unchecked
 BranchNumber	int	Checked
 Id	int	Unchecked
-Password	varchar(50)	Checked
-UserCode	varchar(50)	Checked
+password	varchar(50)	Checked
+userCode	varchar(50)	Checked
 FirstName	varchar(50)	Checked
 LastName	varchar(50)	Checked
 Mail	varchar(50)	Checked
