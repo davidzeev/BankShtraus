@@ -1,40 +1,94 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { TransferData } from '../../../../models/TransferData.model';
+import { TransactionDataTable, transaction, transactionAccount } from '../../../../models/TransferData.model';
 import * as XLSX from 'xlsx';
+import { ApiService } from '../../../../services/api.service';
+import { UserService } from '../../../../services/user.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { UtilsService } from '../../../../services/utils.service';
+import { LabelValue } from '../../../../models/labelValue.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SpinnerService } from '../../../../services/spinner.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recent-transactions',
   templateUrl: './recent-transactions.component.html',
   styleUrl: './recent-transactions.component.scss'
 })
-export class RecentTransactionsComponent implements AfterViewInit {
-  public displayedColumns: string[] = ['date', 'description', 'rightsAndObligations', 'balance'];
-  public dataSource = new MatTableDataSource<TransferData>();
-  private dataList = [
-    { date: "1", description: "בדיקת אורך השורה של התיאור", rightsAndObligations: 1, balance: 123456 },
-    { date: "12", description: "12", rightsAndObligations: -12, balance: 1111 },
-    { date: "123", description: "123", rightsAndObligations: 123, balance: -12398 },
-    { date: "4", description: "4", rightsAndObligations: 4, balance: 123454 },
-    { date: "456", description: "456", rightsAndObligations: 456, balance: 87556 },
-    { date: "1567567", description: "1", rightsAndObligations: 1, balance: 123456 },
-    { date: "1243242", description: "12", rightsAndObligations: 12, balance: 1111 },
-    { date: "12123123", description: "123", rightsAndObligations: -1234, balance: 12398 },
-    { date: "412312", description: "4", rightsAndObligations: 1234, balance: 123454 },
-    { date: "451235464566", description: "456", rightsAndObligations: 456, balance: 87556 },
-    { date: "1567123567", description: "131", rightsAndObligations: 31, balance: 1323456 },
-  ]
+export class RecentTransactionsComponent implements AfterViewInit, OnDestroy {
+  public dateOptions: LabelValue[] = [
+    { label: 'מתחילת החודש', value: 0 },
+    { label: 'חודש אחרון', value: 1 },
+    { label: '3 חודשים אחרונים', value: 3 },
+    { label: '6 חודשים אחרונים', value: 6 },
+    { label: 'שנה אחרונה', value: 12 }
+  ];
+  public displayedColumns: string[] = ['date', 'description', 'amount', 'balance'];
+  public dataSource = new MatTableDataSource<TransactionDataTable>();
+  private subscription: Subscription = new Subscription();
+
+  public transForm!: FormGroup;
+  constructor(
+    private apiService: ApiService,
+    private userService: UserService,
+    private utilsService: UtilsService,
+    private fb: FormBuilder,
+  ) {
+    this.transForm = this.fb.group<any>({
+      month: [3],
+    });
+  }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  // אחרי שנטען התצוגה
   ngAfterViewInit() {
-    this.dataSource = new MatTableDataSource<TransferData>(this.dataList);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.getTranscationFromServer();
+    this.subscription.add(
+      this.transForm.controls['month'].valueChanges.subscribe(() => {
+        this.getTranscationFromServer();
+      }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private getTranscationFromServer(): void {
+    let month = this.transForm.controls['month'].value;
+    const fromDate = month ? this.utilsService.getDatePlus(0, -month, 0) : this.utilsService.FirstDayMonth();
+
+    const querySearch: transactionAccount = {
+      accountNumber: this.userService.getAccountDetail().accountNumber,
+      fromDate: fromDate,
+      toDate: new Date()
+    };
+
+    this.apiService.getTransaction(querySearch).subscribe({
+      next: (transactions: transaction[]) => {
+        const dataTable = transactions.map(transaction => {
+          const date = new Date(transaction.date);
+          const formattedDate = this.utilsService.dateToStringFormat(date);
+
+          return {
+            date: formattedDate,
+            description: transaction.transactionType == 1 ? `העברה בנקאית מ${transaction.accountNameSender}` : "",
+            amount: transaction.amount,
+            balance: transaction.balance
+          };
+        });
+        this.dataSource = new MatTableDataSource<TransactionDataTable>(dataTable);
+      },
+      error: (error) => {
+        this.utilsService.handleServerError(error);
+      }
+    });
+
   }
 
   // ייצוא לאקסל
@@ -46,4 +100,5 @@ export class RecentTransactionsComponent implements AfterViewInit {
     // Save to file
     XLSX.writeFile(wb, 'תנועות בחשבון שלי.xlsx');
   }
+
 }

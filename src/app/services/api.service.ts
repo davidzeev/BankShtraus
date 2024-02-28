@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { loginUser } from '../models/user.model';
-import { url } from 'inspector';
+import { Observable, tap } from 'rxjs';
+import { LoginAccount } from '../models/user.model';
+import { transaction, transactionAccount } from '../models/TransferData.model';
+import { SpinnerService } from './spinner.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,21 @@ import { url } from 'inspector';
 export class ApiService {
   readonly urlApi = "https://localhost:7208/api/"
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private spinnerService: SpinnerService) { }
 
-  public login(userLogin: loginUser): Observable<any> {
+  public login(loginAccount: LoginAccount): Observable<any> {
     const url = this.urlApi + "login";
-    return this.httpClient.post<any>(url, userLogin);
+    this.spinnerService.startLoading();
+    return this.httpClient.post<any>(url, loginAccount).pipe(tap(() => {
+      this.spinnerService.stopLoading();
+    }));
+  }
+
+  public getTransaction(querySearch: transactionAccount): Observable<transaction[]> {
+    const url = this.urlApi + "transaction";
+    this.spinnerService.startLoading();
+    return this.httpClient.post<any>(url, querySearch).pipe(tap(() => {
+      this.spinnerService.stopLoading();
+    }));
   }
 }

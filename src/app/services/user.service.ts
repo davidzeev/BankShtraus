@@ -1,19 +1,36 @@
 import { Injectable } from '@angular/core';
-import { User, loginUser } from '../models/user.model';
+import { Account, LoginAccount } from '../models/user.model';
 import { ApiService } from './api.service';
 import { Observable, tap } from 'rxjs';
+import { Role } from '../models/enums.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private user!: User;
+  private account!: Account;
   constructor(private ApiSrv: ApiService) { }
 
-  public login(loginUser: loginUser): Observable<User> {
-    return this.ApiSrv.login(loginUser).pipe(tap((resultData) => {
-      this.user = resultData;
+  public login(loginAccount: LoginAccount): Observable<Account> {
+    return this.ApiSrv.login(loginAccount).pipe(tap((resultData: Account) => {
+      this.account = resultData;
     }));
+  }
+
+  public getAccountDetail(): Account {
+    return this.account;
+  }
+
+  public logoutAccount(): void {
+    this.account.accountNumber = 0;
+  }
+
+  public isLoginAccount(): boolean {
+    return this.account && this.account.accountNumber != 0;
+  }
+
+  public isAdminAccount(): boolean {
+    return this.account && this.account.role == Role.admin;
   }
 }

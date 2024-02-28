@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     AppRoutingModule,
     HttpClientModule,
     MatTableModule,
+    MatProgressSpinnerModule,
   ],
 
   providers: [

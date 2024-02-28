@@ -34,7 +34,6 @@
 
 .content-wrap {
     padding-bottom: 3rem;
-    /* Footer height */
 }
 
 
@@ -51,4 +50,12 @@
     a {
         color: #ffffff;
     }
+}
+
+mat-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
 }

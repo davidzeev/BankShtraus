@@ -28,7 +28,7 @@
                 <mat-icon>person</mat-icon>
                 אזור אישי
             </a>
-            <a mat-list-item *ngIf="isUserAdmin()" (click)="routeAdmin()">
+            <a mat-list-item *ngIf="isAdmin" (click)="routeAdmin()">
                 <mat-icon>supervised_user_circle</mat-icon>
                 ניהול משתמשים
             </a>

@@ -6,6 +6,7 @@ import { BankTransferComponent } from './components/bank-transfer/bank-transfer.
 import { RecentTransactionsComponent } from './components/recent-transactions/recent-transactions.component';
 import { routingUrl } from '../../models/routing.model';
 import { HomeComponent } from './components/home/home.component';
+import { adminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
       { path: routingUrl.personalArea, component: PersonalAreaComponent },
       { path: routingUrl.BankTransfer, component: BankTransferComponent },
       { path: routingUrl.RecentTranscations, component: RecentTransactionsComponent },
-      { path: routingUrl.admin, loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+      { path: routingUrl.admin, loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canActivate: [adminGuard] },
       { path: '**', redirectTo: routingUrl.home },
     ]
   },

@@ -8,6 +8,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -23,6 +28,11 @@ import { MatIconModule } from '@angular/material/icon';
     MatSidenavModule,
     MatListModule,
     MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatAutocompleteModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -34,6 +44,11 @@ import { MatIconModule } from '@angular/material/icon';
     MatSidenavModule,
     MatListModule,
     MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatAutocompleteModule,
   ]
 })
 export class SharedModule { }

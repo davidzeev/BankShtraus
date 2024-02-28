@@ -1,10 +1,10 @@
-export interface loginUser {
+export interface LoginAccount {
     userId: number | null,
     userCode: string,
     password: string
 }
 
-export interface User {
+export interface Account {
     accountNumber: number;
     branchNumber: number;
     userId: number;

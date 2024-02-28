@@ -3,48 +3,30 @@
     <div class="login-container">
         <h2>התחברות</h2>
         <form [formGroup]="loginForm" (keyup.enter)="tryLogin()">
-            <label class="required" for="userCode">קוד משתמש</label>
-            <input class="form-control" formControlName="userCode" type="text" id="userCode" name="USER"
-                [class.is-invalid]="submit && loginForm.get('userCode')?.invalid">
-            <div class="invalid-feedback" id="errUserCode" *ngIf="submit && loginForm.get('userCode')?.invalid">
-                <div *ngIf="loginForm.get('userCode')?.errors?.['required']"> יש למלא קוד משתמש</div>
-            </div>
-            <br />
-
-            <label for="userId">תעודת זהות (9 ספרות)</label>
-            <input class="form-control  " formControlName="userId" type="number" id="userId" name="userId"
-                [class.is-invalid]="submit && loginForm.get('userId')?.invalid">
-            <div class="invalid-feedback" id="errUserId" *ngIf="submit && loginForm.get('userId')?.invalid">
-                <div *ngIf="loginForm.get('userId')?.errors?.['required']"> יש למלא תעודת זהות</div>
-            </div>
+            <mat-form-field appearance="fill" color="primary" hideRequiredMarker>
+                <mat-label>קוד משתמש</mat-label>
+                <input matInput formControlName="userCode" id="userCode" />
+                <mat-error *ngIf="loginForm.get('userCode')?.invalid">יש למלא קוד משתמש</mat-error>
+            </mat-form-field>
 
             <br />
 
-            <label for="password">סיסמה</label>
-            <input class="form-control" formControlName="password" type="password" id="password" name="password"
-                [class.is-invalid]="submit && loginForm.get('password')?.invalid">
-            <div class="invalid-feedback" id="errPassword" *ngIf="submit && loginForm.get('password')?.invalid">
-                <div *ngIf="loginForm.get('password')?.errors?.['required']"> יש למלא סיסמה</div>
-            </div>
+            <mat-form-field appearance="fill" color="primary" hideRequiredMarker>
+                <mat-label>תעודת זהות (9 ספרות)</mat-label>
+                <input matInput formControlName="userId" type="number" id="userId" />
+                <mat-error *ngIf="loginForm.get('userId')?.invalid">יש למלא תעודת זהות</mat-error>
+            </mat-form-field>
+
+            <br />
+
+            <mat-form-field appearance="fill" color="primary" hideRequiredMarker>
+                <mat-label>סיסמה</mat-label>
+                <input matInput formControlName="password" type="password" id="password" />
+                <mat-error *ngIf="loginForm.get('password')?.invalid">יש למלא סיסמה</mat-error>
+            </mat-form-field>
             <br />
 
             <button (click)="tryLogin()">התחבר</button>
         </form>
     </div>
 </div>
-
-<!-- AccountNumber	int	Unchecked
-BranchNumber	int	Checked
-Id	int	Unchecked
-password	varchar(50)	Checked
-userCode	varchar(50)	Checked
-FirstName	varchar(50)	Checked
-LastName	varchar(50)	Checked
-Mail	varchar(50)	Checked
-Phone	varchar(50)	Checked
-HomePhone	varchar(50)	Checked
-Adress	varchar(50)	Checked
-Role	int	Checked
-
-QaGroup	varchar(50)	Checked
-		Unchecked -->

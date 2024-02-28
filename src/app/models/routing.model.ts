@@ -1,4 +1,8 @@
 export enum routingUrl {
+    login = 'login',
+    loginFull = 'login',
+    main = 'main',
+    mainFull = 'main',
     personalArea = 'personalArea',
     personalAreaFull = 'main/personalArea',
     BankTransfer = 'BankTransfer',
@@ -7,8 +11,6 @@ export enum routingUrl {
     RecentTranscationsFull = 'main/RecentTranscations',
     home = 'home',
     homeFull = 'main/home',
-    login = 'login',
-    loginFull = 'login',
     admin = 'admin',
     adminFull = 'main/admin',
     bugList = 'bugList',
