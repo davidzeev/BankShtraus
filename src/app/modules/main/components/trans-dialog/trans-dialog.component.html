@@ -1,0 +1,38 @@
+<h3>מספר אסמכתא: {{data.referenceNumber}}</h3>
+<table id="transTable">
+    <tbody>
+        <tr class="ng-star-inserted">
+            <td class="label-td ng-star-inserted">תיאור הפעולה</td>
+            <td class="number-font">{{data | transDescription}}</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td class="label-td ng-star-inserted">סכום</td>
+            <td class="number-font">{{data.amount | number}}</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td class="label-td ng-star-inserted">מספר בנק מחויב</td>
+            <td class="number-font">{{data.counterpartyBankId}}</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td class="label-td ng-star-inserted">מספר סניף מחויב</td>
+            <td class="number-font">{{data.counterpartyBranchId}}</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td class="label-td ng-star-inserted">מספר חשבון מחויב</td>
+            <td class="number-font ng-star-inserted">{{data.accountNumber}}</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td class="label-td ng-star-inserted">שם חשבון מחויב</td>
+            <td class="print-direction ng-star-inserted">{{data.counterpartyAccountName}}</td>
+        </tr>
+        <tr class="ng-star-inserted">
+            <td class="label-td ng-star-inserted">תאריך חיוב</td>
+            <td class="print-direction ng-star-inserted">{{data.date | date}}</td>
+        </tr>
+
+        <!-- <tr class="ng-star-inserted">
+            <td class="label-td">סניף בו בוצעה הפעולה</td>
+            <td class="print-direction">תלפיות ירושלים</td>
+        </tr> -->
+    </tbody>
+</table>

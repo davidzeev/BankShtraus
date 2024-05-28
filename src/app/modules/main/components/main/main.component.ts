@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { routingUrl } from '../../../../models/routing.model';
+import { RoutingUrl } from '../../../../models/routing.model';
 import { UserService } from '../../../../services/user.service';
 
 @Component({
@@ -16,33 +16,17 @@ export class MainComponent {
     this.isAdmin = this.userService.isAdminAccount();
   }
 
-  // דף הבית
-  public routeHome(): void {
-    this.router.navigate([routingUrl.homeFull]);
+  public get RoutingUrl(): typeof RoutingUrl {
+    return RoutingUrl;
   }
 
-  // אזור אישי
-  public routePersonalArea(): void {
-    this.router.navigate([routingUrl.personalAreaFull]);
-  }
-
-  // העברות בנקאיות
-  public routeBankTransfer(): void {
-    this.router.navigate([routingUrl.BankTransferFull]);
-  }
-
-  // תנועות בחשבון
-  public routeRecentTranscations(): void {
-    this.router.navigate([routingUrl.RecentTranscationsFull]);
-  }
-
-  // ניהול
-  public routeAdmin(): void {
-    this.router.navigate([routingUrl.adminFull]);
+  public routeTo(url: RoutingUrl): void {
+    this.router.navigate([url]);
   }
 
   // ניתוק
   public logOut(): void {
-    this.router.navigate([routingUrl.loginFull]);
+    // maybe add somthing
+    this.router.navigate([RoutingUrl.loginFull]);
   }
 }

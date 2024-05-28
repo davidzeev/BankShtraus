@@ -2,16 +2,17 @@ import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { TransactionDataTable, transaction, transactionAccount } from '../../../../models/TransferData.model';
+import { Transaction, TransactionAccount } from '../../../../models/TransferData.model';
 import * as XLSX from 'xlsx';
 import { ApiService } from '../../../../services/api.service';
 import { UserService } from '../../../../services/user.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UtilsService } from '../../../../services/utils.service';
 import { LabelValue } from '../../../../models/labelValue.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { SpinnerService } from '../../../../services/spinner.service';
 import { Subscription } from 'rxjs';
+import { IncomeExpenseType, TransactionType } from '../../../../models/enums.model';
+import { MatDialog } from '@angular/material/dialog';
+import { TransDialogComponent } from '../trans-dialog/trans-dialog.component';
 
 @Component({
   selector: 'app-recent-transactions',
@@ -19,6 +20,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './recent-transactions.component.scss'
 })
 export class RecentTransactionsComponent implements AfterViewInit, OnDestroy {
+
   public dateOptions: LabelValue[] = [
     { label: 'מתחילת החודש', value: 0 },
     { label: 'חודש אחרון', value: 1 },
@@ -27,7 +29,7 @@ export class RecentTransactionsComponent implements AfterViewInit, OnDestroy {
     { label: 'שנה אחרונה', value: 12 }
   ];
   public displayedColumns: string[] = ['date', 'description', 'amount', 'balance'];
-  public dataSource = new MatTableDataSource<TransactionDataTable>();
+  public dataSource = new MatTableDataSource<Transaction>();
   private subscription: Subscription = new Subscription();
 
   public transForm!: FormGroup;
@@ -36,6 +38,7 @@ export class RecentTransactionsComponent implements AfterViewInit, OnDestroy {
     private userService: UserService,
     private utilsService: UtilsService,
     private fb: FormBuilder,
+    private dialog: MatDialog,
   ) {
     this.transForm = this.fb.group<any>({
       month: [3],
@@ -62,27 +65,17 @@ export class RecentTransactionsComponent implements AfterViewInit, OnDestroy {
   private getTranscationFromServer(): void {
     let month = this.transForm.controls['month'].value;
     const fromDate = month ? this.utilsService.getDatePlus(0, -month, 0) : this.utilsService.FirstDayMonth();
+    const toDate = this.utilsService.getDatePlus(0, 0, 1);
 
-    const querySearch: transactionAccount = {
-      accountNumber: this.userService.getAccountDetail().accountNumber,
+    const querySearch: TransactionAccount = {
+      accountNumber: this.userService.getAccountDetail()!.accountNumber,
       fromDate: fromDate,
-      toDate: new Date()
+      toDate: toDate
     };
 
     this.apiService.getTransaction(querySearch).subscribe({
-      next: (transactions: transaction[]) => {
-        const dataTable = transactions.map(transaction => {
-          const date = new Date(transaction.date);
-          const formattedDate = this.utilsService.dateToStringFormat(date);
-
-          return {
-            date: formattedDate,
-            description: transaction.transactionType == 1 ? `העברה בנקאית מ${transaction.accountNameSender}` : "",
-            amount: transaction.amount,
-            balance: transaction.balance
-          };
-        });
-        this.dataSource = new MatTableDataSource<TransactionDataTable>(dataTable);
+      next: (transactions: Transaction[]) => {
+        this.dataSource = new MatTableDataSource<Transaction>(transactions);
       },
       error: (error) => {
         this.utilsService.handleServerError(error);
@@ -99,6 +92,22 @@ export class RecentTransactionsComponent implements AfterViewInit, OnDestroy {
 
     // Save to file
     XLSX.writeFile(wb, 'תנועות בחשבון שלי.xlsx');
+  }
+
+
+  public openDialog(element: Transaction): void {
+    const dialogRef = this.dialog.open(TransDialogComponent, {
+      width: '500px',  // רוחב החלון
+      height: '450px',  // רוחב החלון
+
+      data: {
+        trans: element
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }

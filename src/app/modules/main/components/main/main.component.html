@@ -2,20 +2,20 @@
     <!-- Side navigation -->
     <mat-drawer #drawer opened="true" mode="side" class="example-sidenav">
         <mat-nav-list>
-            <a mat-list-item (click)="routeHome()">
+            <a mat-list-item (click)="routeTo(RoutingUrl.homeFull)">
                 <mat-icon>home</mat-icon>
                 בית
             </a>
-            <a mat-list-item (click)="routeRecentTranscations()">
+            <a mat-list-item (click)="routeTo(RoutingUrl.RecentTranscationsFull)">
                 <mat-icon>history</mat-icon>
                 תנועות אחרונות
             </a>
-            <a mat-list-item (click)="routeBankTransfer()">
+            <a mat-list-item (click)="routeTo(RoutingUrl.BankTransferFull)">
                 <mat-icon>swap_horiz</mat-icon>
                 העברה בין חשבונות
             </a>
             <!-- routerLink="/deposits-and-savings" -->
-            <a mat-list-item disabled="true">
+            <a mat-list-item (click)="routeTo(RoutingUrl.DepositsFull)">
                 <mat-icon>account_balance_wallet</mat-icon>
                 פיקדונות וחסכונות
             </a>
@@ -24,11 +24,11 @@
                 <mat-icon>local_atm</mat-icon>
                 הלוואות
             </a>
-            <a mat-list-item (click)="routePersonalArea()">
+            <a mat-list-item (click)="routeTo(RoutingUrl.personalAreaFull)">
                 <mat-icon>person</mat-icon>
                 אזור אישי
             </a>
-            <a mat-list-item *ngIf="isAdmin" (click)="routeAdmin()">
+            <a mat-list-item *ngIf="isAdmin" (click)="routeTo(RoutingUrl.adminFull)">
                 <mat-icon>supervised_user_circle</mat-icon>
                 ניהול משתמשים
             </a>

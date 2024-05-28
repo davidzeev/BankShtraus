@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './components/main/main.component';
@@ -10,6 +10,14 @@ import { SharedModule } from '../shared/shared.module';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MyPaginatorIntl } from '../shared/general/myPaginatorIntl';
 import { HomeComponent } from './components/home/home.component';
+import { TransDialogComponent } from './components/trans-dialog/trans-dialog.component';
+import { TransDescriptionPipe } from './pipes/trans-description.pipe';
+import { DepositsMainComponent } from './components/deposits/deposits-main/deposits-main.component';
+import { MyDepositsComponent } from './components/deposits/my-deposits/my-deposits.component';
+import { CreateDepositComponent } from './components/deposits/create-deposit/create-deposit.component';
+import { ActiveDepositsComponent } from './components/deposits/active-deposits/active-deposits.component';
+import { ExitStationPipe } from './pipes/exit-station.pipe';
+import { DepositStatusPipe } from './pipes/deposit-status.pipe';
 
 
 @NgModule({
@@ -19,6 +27,14 @@ import { HomeComponent } from './components/home/home.component';
     RecentTransactionsComponent,
     BankTransferComponent,
     HomeComponent,
+    TransDialogComponent,
+    TransDescriptionPipe,
+    DepositsMainComponent,
+    MyDepositsComponent,
+    CreateDepositComponent,
+    ActiveDepositsComponent,
+    ExitStationPipe,
+    DepositStatusPipe,
   ],
   imports: [
     CommonModule,
@@ -26,6 +42,7 @@ import { HomeComponent } from './components/home/home.component';
     SharedModule,
   ],
   providers: [
+    CurrencyPipe,
     { provide: MatPaginatorIntl, useClass: MyPaginatorIntl },
   ],
 })

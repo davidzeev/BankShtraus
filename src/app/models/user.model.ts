@@ -15,8 +15,9 @@ export interface Account {
     mail: string;
     phone: string;
     homePhone: string;
-    adress: string;
+    address: string;
     role: number;
     qaGroup: string;
     balance: number;
+    OverdraftLimit: number;
 }

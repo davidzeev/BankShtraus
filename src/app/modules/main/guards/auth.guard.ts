@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
-import { routingUrl } from '../../../models/routing.model';
+import { RoutingUrl } from '../../../models/routing.model';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const userService = inject(UserService);
@@ -10,7 +10,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true;
   }
   else {
-    router.navigate([routingUrl.loginFull]);
+    router.navigate([RoutingUrl.loginFull]);
     return false;
   }
 };

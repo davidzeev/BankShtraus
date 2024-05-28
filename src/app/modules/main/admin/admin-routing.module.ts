@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { routingUrl } from '../../../models/routing.model';
+import { RoutingUrl } from '../../../models/routing.model';
 import { MainAdminComponent } from './components/main-admin/main-admin.component';
 import { BugListComponent } from './components/bug-list/bug-list.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
@@ -10,10 +10,10 @@ import { UpdateGroupComponent } from './components/update-group/update-group.com
 const routes: Routes = [
   {
     path: "", component: MainAdminComponent, children: [
-      { path: routingUrl.createAccount, component: CreateAccountComponent },
-      { path: routingUrl.updateAccount, component: UpdateAccountComponent },
-      { path: routingUrl.updateGroup, component: UpdateGroupComponent },
-      { path: routingUrl.bugList, component: BugListComponent },
+      { path: RoutingUrl.createAccount, component: CreateAccountComponent },
+      { path: RoutingUrl.updateAccount, component: UpdateAccountComponent },
+      { path: RoutingUrl.updateGroup, component: UpdateGroupComponent },
+      { path: RoutingUrl.bugList, component: BugListComponent },
       { path: '**', redirectTo: "" },
     ]
   },

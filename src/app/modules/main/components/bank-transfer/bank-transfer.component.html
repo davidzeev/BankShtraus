@@ -1,1 +1,86 @@
 <h1>העברה בין חשבונות</h1>
+
+<div class="alert alert-success" role="alert" *ngIf="action == 1"> הפעולה הושלמה בהצלחה! </div>
+<div class="alert alert-danger" role="alert" *ngIf="action == 2"> התרחשה שגיאה במהלך הפעולה. </div>
+
+
+<form [formGroup]="transferForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-4">
+            <mat-form-field>
+                <mat-label>שם המוטב</mat-label>
+                <input matInput formControlName="beneficiaryName" required>
+                <mat-error *ngIf="transferForm.get('beneficiaryName')?.invalid">שדה חובה</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-4">
+            <mat-form-field>
+                <mat-label>בנק</mat-label>
+                <mat-select formControlName="bankID" required>
+                    <mat-option *ngFor="let bank of banks" [value]="bank.bankId">{{ bank.bankName }} -
+                        {{bank.bankId}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="transferForm.get('bankID')?.invalid">שדה חובה</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-4">
+            <mat-form-field>
+                <mat-label>סניף</mat-label>
+                <mat-select formControlName="branchID" required>
+                    <mat-option *ngFor="let branch of branches" [value]="branch.branchId">{{ branch.branchName }} -
+                        {{ branch.branchId }} </mat-option>
+                </mat-select>
+                <mat-error *ngIf="transferForm.get('branchID')?.invalid">שדה חובה</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-4">
+            <mat-form-field>
+                <mat-label>מספר חשבון</mat-label>
+                <input matInput type="number" formControlName="accountNumber" required>
+                <mat-error *ngIf="transferForm.get('accountNumber')?.invalid">שדה חובה</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <hr />
+    <div>
+
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <mat-form-field>
+                <mat-label>סכום העברה</mat-label>
+                <input matInput type="number" formControlName="amount">
+                <mat-error *ngIf="transferForm.get('amount')?.errors?.['required']">שדה חובה</mat-error>
+                <mat-error *ngIf="transferForm.get('amount')?.errors?.['max']">מוגל ל 10000</mat-error>
+            </mat-form-field>
+            <!-- <mat-form-field>
+                <mat-label>סכום העברה</mat-label>
+                <input matInput type="text" formControlName="amount" (input)="formatInput($event)">
+                <mat-error *ngIf="transferForm.get('amount')?.invalid">שדה חובה</mat-error>
+            </mat-form-field> -->
+        </div>
+        <div class="col-4">
+            <mat-form-field>
+                <mat-label>מטרת העברה</mat-label>
+                <mat-select formControlName="transferPurpose">
+                    <mat-option *ngFor="let purpose of transferPurposes" [value]="purpose.key">
+                        {{ purpose.value }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-4" *ngIf="transferForm.get('transferPurpose')?.value == 99">
+            <mat-form-field>
+                <mat-label>מטרת העברה אחרת</mat-label>
+                <input matInput type="text" formControlName="otherPurpose" required>
+                <mat-error *ngIf="transferForm.get('otherPurpose')?.invalid">שדה חובה</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="text-start">
+        <button class="btn btn-primary" type="submit" [disabled]="transferForm.invalid">שליחה</button>
+    </div>
+</form>

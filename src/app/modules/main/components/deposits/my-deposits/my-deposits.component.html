@@ -1,0 +1,58 @@
+<h1>הפקדונות/חסכונות שלי</h1>
+
+<div *ngIf="deposits.length > 0; else noDeposits">
+    <mat-table [dataSource]="deposits" class="mat-elevation-z8">
+
+        <!-- Deposit Type Name Column -->
+        <ng-container matColumnDef="depositTypeName">
+            <mat-header-cell *matHeaderCellDef> סוג הפקדון </mat-header-cell>
+            <mat-cell *matCellDef="let deposit"> {{ deposit.depositTypeName }} </mat-cell>
+        </ng-container>
+
+        <!-- Interest Rate Column -->
+        <ng-container matColumnDef="interestRate">
+            <mat-header-cell *matHeaderCellDef> ריבית </mat-header-cell>
+            <mat-cell *matCellDef="let deposit"> {{ deposit.interestRate }}% </mat-cell>
+        </ng-container>
+
+        <!-- Deposited Amount Column -->
+        <ng-container matColumnDef="depositedAmount">
+            <mat-header-cell *matHeaderCellDef> סכום שהופקד </mat-header-cell>
+            <mat-cell *matCellDef="let deposit"> {{ deposit.depositedAmount | number }} ₪ </mat-cell>
+        </ng-container>
+
+        <!-- Date Start Column -->
+        <ng-container matColumnDef="dateStart">
+            <mat-header-cell *matHeaderCellDef> תאריך התחלה </mat-header-cell>
+            <mat-cell *matCellDef="let deposit"> {{ deposit.dateStart | date: 'dd/MM/yyyy' }} </mat-cell>
+        </ng-container>
+
+        <!-- Date End Column -->
+        <ng-container matColumnDef="dateEnd">
+            <mat-header-cell *matHeaderCellDef> תאריך סיום </mat-header-cell>
+            <mat-cell *matCellDef="let deposit"> {{ deposit.dateEnd | date: 'dd/MM/yyyy' }} </mat-cell>
+        </ng-container>
+
+        <!-- Deposit Status Column -->
+        <ng-container matColumnDef="depositStatus">
+            <mat-header-cell *matHeaderCellDef> סטטוס </mat-header-cell>
+            <mat-cell *matCellDef="let deposit"> {{ deposit.depositStatus | depositStatus }} </mat-cell>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef> פעולה </mat-header-cell>
+            <mat-cell *matCellDef="let deposit">
+                <button mat-button color="warn" *ngIf="deposit.depositStatus === 1"
+                    (click)="cancelDeposit(deposit.depositId)">בטל פקדון</button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>
+
+<ng-template #noDeposits>
+    <p>אין לך פקדונות כרגע.</p>
+</ng-template>

@@ -1,10 +1,130 @@
-import { Component } from '@angular/core';
+import { CurrencyPipe, KeyValue } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from '../../../../services/api.service';
+import { Bank, Branch } from '../../../../models/BankBranch.model';
+import { BankTransferDTO } from '../../../../models/BankTransfer.model';
+import { UserService } from '../../../../services/user.service';
+import { UtilsService } from '../../../../services/utils.service';
+import { ActionType } from '../../../../models/enums.model';
 
 @Component({
   selector: 'app-bank-transfer',
   templateUrl: './bank-transfer.component.html',
   styleUrl: './bank-transfer.component.scss'
 })
-export class BankTransferComponent {
+export class BankTransferComponent implements OnInit {
+
+  banks: Bank[] = [];
+  branches: Branch[] = [];
+  action: ActionType = ActionType.None;
+
+  transferForm!: FormGroup;
+  transferPurposes: KeyValue<number, string>[] = [
+    { "key": 1, "value": "תשלום" },
+    { "key": 2, "value": "שכר דירה" },
+    { "key": 3, "value": "החזר חוב" },
+    { "key": 4, "value": "הלוואה" },
+    { "key": 5, "value": "ועד בית" },
+    { "key": 6, "value": "מזונות" },
+    { "key": 7, "value": "משכורת" },
+    { "key": 8, "value": "קרוב משפחה" },
+    { "key": 9, "value": "שכר לימוד" },
+    { "key": 10, "value": "מיסי חבר" },
+    { "key": 11, "value": "תרומה" },
+    { "key": 99, "value": "אחר" }
+  ];
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private currencyPipe: CurrencyPipe,
+    private apiService: ApiService,
+    private userService: UserService,
+    private utilsService: UtilsService
+  ) { }
+
+  ngOnInit(): void {
+    this.initForm();
+    this.loadBanks();
+    this.transferForm.valueChanges.subscribe(() => {
+      this.action = ActionType.None;
+    })
+  }
+
+  private initForm(): void {
+    this.transferForm = this.formBuilder.group({
+      beneficiaryName: ['', Validators.required],
+      bankID: ['', Validators.required],
+      branchID: ['', Validators.required],
+      accountNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      amount: ['', [Validators.required, Validators.max(10000)]],
+      transferPurpose: ['', Validators.required],
+      otherPurpose: ['']
+    });
+
+    this.transferForm.get('bankID')?.valueChanges.subscribe((newValue) => {
+      this.onBankSelected(newValue);
+    })
+  }
+
+  public onSubmit(): void {
+    if (this.transferForm.invalid) {
+      return;
+    }
+    const formValue = this.transferForm.value;
+    const accountNumber = this.userService.getAccountDetail()!.accountNumber;
+    const objToSend: BankTransferDTO = {
+      accountNumberSender: accountNumber,
+      beneficiaryName: formValue.beneficiaryName,
+      bankID: formValue.bankID,
+      branchID: formValue.branchID,
+      accountNumber: formValue.accountNumber,
+      amount: formValue.amount,
+      transferPurpose: formValue.transferPurpose,
+      otherPurpose: formValue.otherPurpose,
+    }
+    this.apiService.performBankTransfer(objToSend).subscribe({
+      next: (referenceNumber: any) => {
+        debugger;
+        this.transferForm.disable();
+        console.log(`referenceNumber is: ${referenceNumber}`)
+        this.action = ActionType.Success;
+      },
+      error: (error) => {
+        debugger;
+        this.utilsService.handleServerError(error);
+        this.action = ActionType.Failed;
+      }
+    });
+  }
+
+
+  public formatInput(event: any): void {
+    const inputValue = event.target.value;
+    const valueWithCommas = this.currencyPipe.transform(inputValue.replace(/\D/g, '').replace(/^0+/, ''), 'ILS', 'symbol', '1.0-0')
+    this.transferForm.get('amount')?.patchValue(valueWithCommas, { eventEmit: false })
+  }
+
+  private loadBanks(): void {
+    this.apiService.getBanks().subscribe(banks => {
+      this.banks = banks;
+    });
+  }
+
+  private onBankSelected(bankId: number): void {
+    this.loadBranches(bankId);
+    const control = this.transferForm.get('branchID');
+    control?.patchValue(null);
+    control?.markAsPristine();
+    control?.markAsUntouched();
+  }
+
+  private loadBranches(bankId: number): void {
+    if (bankId) {
+      this.apiService.getBranches(bankId).subscribe(branches => {
+        this.branches = branches;
+      });
+    }
+  }
 
 }

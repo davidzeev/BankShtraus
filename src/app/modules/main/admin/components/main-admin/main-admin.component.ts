@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { routingUrl } from '../../../../../models/routing.model';
+import { RoutingUrl } from '../../../../../models/routing.model';
 
 @Component({
   selector: 'app-main-admin',
@@ -13,22 +13,22 @@ export class MainAdminComponent {
 
   // יצירת משתמש
   public routeCreateAccount(): void {
-    this.router.navigate([routingUrl.createAccountFull]);
+    this.router.navigate([RoutingUrl.createAccountFull]);
   }
 
   // עדכון משתמש
   public routeUpdateAccount(): void {
-    this.router.navigate([routingUrl.updateAccountFull]);
+    this.router.navigate([RoutingUrl.updateAccountFull]);
   }
 
   // עדכון קבוצה
   public routeUpdateGroup(): void {
-    this.router.navigate([routingUrl.updateGroupFull]);
+    this.router.navigate([RoutingUrl.updateGroupFull]);
   }
 
   // רשימת ניהול באגים
   public routeBugList(): void {
-    this.router.navigate([routingUrl.bugListFull]);
+    this.router.navigate([RoutingUrl.bugListFull]);
   }
 
 }

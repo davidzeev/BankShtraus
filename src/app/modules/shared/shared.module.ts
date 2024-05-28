@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatFormFieldModule,
     MatSelectModule,
     MatAutocompleteModule,
+    MatDialogModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -49,6 +51,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatFormFieldModule,
     MatSelectModule,
     MatAutocompleteModule,
+    MatDialogModule,
   ]
 })
 export class SharedModule { }

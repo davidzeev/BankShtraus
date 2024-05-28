@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Account, LoginAccount } from '../../../../models/user.model';
 import { UserService } from '../../../../services/user.service';
-import { routingUrl } from '../../../../models/routing.model';
+import { RoutingUrl } from '../../../../models/routing.model';
 import { Router } from '@angular/router';
 import { UtilsService } from '../../../../services/utils.service';
 
@@ -39,7 +39,7 @@ export class LoginComponent {
       next: (resultData: Account) => {
         if (resultData) {
           // התחברות מוצלחת
-          this.router.navigate([routingUrl.homeFull]);
+          this.router.navigate([RoutingUrl.homeFull]);
         } else {
           // שגיאה בקבלת נתונים
           console.error('Error in response data:', resultData);
@@ -53,6 +53,6 @@ export class LoginComponent {
 
   private autoFill(): void {
     this.loginForm.patchValue({ userId: 315511766, userCode: "6513FDFD", password: "315511766" })
-    this.tryLogin();
+    // this.tryLogin();
   }
 }
