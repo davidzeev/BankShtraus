@@ -8,8 +8,8 @@ import { SpinnerService } from './services/spinner.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'BankShtraus';
-  spinnerLoading: boolean = false;
+  public title = 'BankShtraus';
+  public spinnerLoading: boolean = false;
   private spinnerSubscription: Subscription;
   constructor(private spinnerService: SpinnerService) {
     this.spinnerSubscription = this.spinnerService.spinnerStatus.subscribe((status) => {

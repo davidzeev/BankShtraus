@@ -25,7 +25,7 @@ export class ApiService {
   }
 
   public getTransaction(querySearch: TransactionAccount): Observable<Transaction[]> {
-    const url = this.apiUrl + "/transaction";
+    const url = this.apiUrl + "/transactions";
     this.spinnerService.startLoading();
     return this.httpClient.post<any>(url, querySearch).pipe(tap(() => {
       this.spinnerService.stopLoading();
