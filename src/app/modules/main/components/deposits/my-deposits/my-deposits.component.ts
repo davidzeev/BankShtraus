@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class MyDepositsComponent implements OnInit {
   deposits: DepositsAccountDTO[] = [];
   accountNumber: number;
-  displayedColumns: string[] = ['depositTypeName', 'interestRate', 'depositedAmount', 'dateStart', 'dateEnd', 'depositStatus', 'action'];
+  displayedColumns: string[] = ['depositTypeName', 'interestRate', 'depositedAmount', 'dateStart', 'dateEnd', 'depositStatus', 'monthlyDepositAmount', 'monthlyDepositDay', 'monthlyWithdrawalDay', 'action'];
 
   constructor(
     private depositService: DepositService,

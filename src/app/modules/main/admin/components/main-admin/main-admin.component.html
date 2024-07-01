@@ -1,7 +1,53 @@
-<h1> אדמין ראשי </h1>
+<div class="container mt-4">
+    <h1 class="mb-4 text-center">אדמין ראשי</h1>
 
-<button (click)="routeCreateAccount()">יצירת משתמש</button>
-<button (click)="routeUpdateAccount()">עדכון משתמש</button>
-<button (click)="routeUpdateGroup()">עדכון קבוצה</button>
-<button (click)="routeBugList()">רשימת ניהול באגים</button>
-<router-outlet></router-outlet>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        <div class="col">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="bi bi-person-plus display-1 mb-3"></i> <!-- אייקון Bootstrap -->
+                    <h5 class="card-title">יצירת משתמש</h5>
+                    <input type="radio" class="btn-check" name="adminAction" id="createAccount" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="createAccount"
+                        (click)="routeCreateAccount()">בחר</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="bi bi-pencil-square display-1 mb-3"></i> <!-- אייקון Bootstrap -->
+                    <h5 class="card-title">עדכון משתמש</h5>
+                    <input type="radio" class="btn-check" name="adminAction" id="updateAccount" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="updateAccount"
+                        (click)="routeUpdateAccount()">בחר</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="bi bi-people display-1 mb-3"></i> <!-- אייקון Bootstrap -->
+                    <h5 class="card-title">עדכון קבוצה</h5>
+                    <input type="radio" class="btn-check" name="adminAction" id="updateGroup" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="updateGroup" (click)="routeUpdateGroup()">בחר</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="bi bi-bug display-1 mb-3"></i> <!-- אייקון Bootstrap -->
+                    <h5 class="card-title">רשימת ניהול באגים</h5>
+                    <input type="radio" class="btn-check" name="adminAction" id="bugList" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="bugList" (click)="routeBugList()">בחר</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <router-outlet></router-outlet>
+</div>

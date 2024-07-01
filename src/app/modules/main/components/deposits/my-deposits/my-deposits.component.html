@@ -39,12 +39,40 @@
             <mat-cell *matCellDef="let deposit"> {{ deposit.depositStatus | depositStatus }} </mat-cell>
         </ng-container>
 
+        <!-- Monthly Deposit Amount Column -->
+        <ng-container matColumnDef="monthlyDepositAmount">
+            <mat-header-cell *matHeaderCellDef> סכום הפקדה חודשי </mat-header-cell>
+            <mat-cell *matCellDef="let deposit">
+                <span *ngIf="deposit.isSavings">{{ deposit.monthlyDepositAmount | number }} ₪</span>
+                <span *ngIf="!deposit.isSavings" title="פעולה זאת אינה חסכון"> X </span>
+            </mat-cell>
+            <mat-cell *matCellDef="let deposit"> {{ deposit.monthlyDepositAmount | number }} ₪ </mat-cell>
+        </ng-container>
+
+        <!-- Monthly Deposit Day Column -->
+        <ng-container matColumnDef="monthlyDepositDay">
+            <mat-header-cell *matHeaderCellDef> יום הפקדה חודשי </mat-header-cell>
+            <mat-cell *matCellDef="let deposit">
+                <span *ngIf="deposit.isSavings">{{ deposit.monthlyDepositDay }}</span>
+                <span *ngIf="!deposit.isSavings" title="פעולה זאת אינה חסכון"> X </span>
+            </mat-cell>
+        </ng-container>
+
+        <!-- monthlyWithdrawalDay Column -->
+        <ng-container matColumnDef="monthlyWithdrawalDay">
+            <mat-header-cell *matHeaderCellDef> תחנת יציאה </mat-header-cell>
+            <mat-cell *matCellDef="let deposit"> {{deposit.monthlyWithdrawalDay | exitStation}} </mat-cell>
+        </ng-container>
+
         <!-- Action Column -->
         <ng-container matColumnDef="action">
             <mat-header-cell *matHeaderCellDef> פעולה </mat-header-cell>
             <mat-cell *matCellDef="let deposit">
                 <button mat-button color="warn" *ngIf="deposit.depositStatus === 1"
-                    (click)="cancelDeposit(deposit.depositId)">בטל פקדון</button>
+                    (click)="cancelDeposit(deposit.depositId)">
+                    <span *ngIf="deposit.isSavings"> בטל חסכון </span>
+                    <span *ngIf="!deposit.isSavings" deposit.isSavings> בטל פקדון </span>
+                </button>
             </mat-cell>
         </ng-container>
 

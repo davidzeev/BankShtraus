@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SpinnerService } from './spinner.service';
+import { PasswordStrength } from '../models/enums.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,33 @@ export class UtilsService {
     this.snackBar.open(err, 'סגור', {
       duration: 5000,
     });
+  }
 
+  public getPasswordStrength(password: string): PasswordStrength {
+    const lengthCriteria = password.length >= 10;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumbers = /[0-9]/.test(password);
+    const hasSpecialChars = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    const criteriaMet = [lengthCriteria, hasUpperCase, hasLowerCase, hasNumbers, hasSpecialChars].filter(criterion => criterion).length;
+
+    if (password.length < 6) {
+      return PasswordStrength.VeryWeak;
+    }
+
+    switch (criteriaMet) {
+      case 1:
+      case 2:
+        return PasswordStrength.Weak;
+      case 3:
+        return PasswordStrength.Medium;
+      case 4:
+        return PasswordStrength.Strong;
+      case 5:
+        return PasswordStrength.VeryStrong;
+      default:
+        return PasswordStrength.VeryWeak;
+    }
   }
 }

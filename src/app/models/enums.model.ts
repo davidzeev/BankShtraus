@@ -8,8 +8,9 @@ export enum TransactionType {
     CreateDeposit = 2,      // יצירת פקדון
     CompleteDeposit = 3,    // סיום פקדון
     WithdrawalDeposit = 4,  // (משכית פקדון (בתחנות יציאה או לפני הזמן
-    Loan = 5,               // הלוואה
-    Fee = 6                 // עמלה
+    UpdateDeposit = 5,      // עדכון חסכון
+    Loan = 6,               // הלוואה
+    Fee = 7                 // עמלה
 }
 export enum IncomeExpenseType {
     Income = 1,     // הכנסות
@@ -23,5 +24,14 @@ export enum ActionType {
 }
 
 export enum Consts {
-    accountNumberAdmin = 10000
+    accountNumberAdmin = 10000,
+    BankId = 444
+}
+
+export enum PasswordStrength {
+    VeryWeak = "סיסמה חלשה מאוד",
+    Weak = "סיסמה חלשה",
+    Medium = "סיסמה בינונית",
+    Strong = "סיסמה חזקה",
+    VeryStrong = "סיסמה חזקה מאוד"
 }

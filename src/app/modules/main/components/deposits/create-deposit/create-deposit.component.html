@@ -31,6 +31,27 @@
                 </mat-error>
             </mat-form-field>
 
+            <div *ngIf="selectedDepositType?.isSavings">
+                <!-- <mat-form-field appearance="fill">
+                    <mat-label>סכום הפקדה חודשי</mat-label>
+                    <input matInput formControlName="monthlyDepositAmount" type="number" required>
+                    <mat-error *ngIf="depositForm.get('monthlyDepositAmount')?.invalid">
+                        יש להזין סכום הפקדה חודשי חוקי
+                    </mat-error>
+                </mat-form-field> -->
+
+                <mat-form-field appearance="fill">
+                    <mat-label>יום הפקדה חודשי</mat-label>
+                    <mat-select formControlName="monthlyDepositDay" required>
+                        <mat-option *ngFor="let day of depositDays" [value]="day">{{ day }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="depositForm.get('monthlyDepositDay')?.invalid">
+                        יש לבחור יום הפקדה חודשי בין 1 ל-28
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+
             <div class="text-start">
                 <button class="btn btn-primary" type="submit" [disabled]="depositForm.invalid">הוסף פקדון</button>
             </div>

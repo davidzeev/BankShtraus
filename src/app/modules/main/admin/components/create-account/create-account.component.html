@@ -1,1 +1,171 @@
-<p>create-account works!</p>
+<div class="container mt-4">
+    <h1>יצירת חשבון חדש</h1>
+
+    <div class="alert alert-success" role="alert" *ngIf="accountNumberResult != null">
+        החשבון נוצר בהצלחה! מספר החשבון הינו {{accountNumberResult}} וקוד משתמש הינו {{userCodeResult}}
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="errTxt">{{ errTxt }}</div>
+
+    <form [formGroup]="createForm">
+        <div class="card mb-3">
+            <div class="card-header">פרטים אישיים</div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>שם פרטי</mat-label>
+                            <input matInput formControlName="firstName" maxLength="50">
+                            <mat-error *ngIf="createForm.get('firstName')?.invalid">
+                                {{ createForm.get('firstName')!.errors | errorMessages }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>שם משפחה</mat-label>
+                            <input matInput formControlName="lastName" maxLength="50">
+                            <mat-error *ngIf="createForm.get('lastName')?.invalid">
+                                {{ createForm.get('lastName')!.errors | errorMessages }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>אימייל</mat-label>
+                            <input matInput formControlName="mail" maxLength="100">
+                            <mat-error *ngIf="createForm.get('mail')?.invalid">
+                                {{ createForm.get('mail')!.errors | errorMessages }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>טלפון</mat-label>
+                            <input matInput formControlName="phone" maxLength="15">
+                            <mat-error *ngIf="createForm.get('phone')?.invalid">
+                                {{ createForm.get('phone')!.errors | errorMessages }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>טלפון בבית</mat-label>
+                            <input matInput formControlName="homePhone" maxLength="15">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>כתובת</mat-label>
+                            <input matInput formControlName="address" maxLength="100">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>תעודת זהות</mat-label>
+                            <input matInput type="number" formControlName="userId" [appMaxDigits]="9">
+                            <mat-error *ngIf="createForm.get('userId')?.invalid">
+                                {{ createForm.get('userId')!.errors | errorMessages }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>סיסמה</mat-label>
+                            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                                autocomplete="new-password">
+                            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                                aria-label="הצג סיסמה" [attr.aria-pressed]="hidePassword">
+                                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="createForm.get('password')?.invalid">
+                                {{ createForm.get('password')!.errors | errorMessages }}
+                            </mat-error>
+                        </mat-form-field>
+                        <div *ngIf="passwordStrength && createForm.get('password')?.valid">
+                            חוזק סיסמה: {{ passwordStrength }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">פרטי חשבון</div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>מספר סניף</mat-label>
+                            <mat-select formControlName="branchNumber">
+                                <mat-option *ngFor="let branch of branches" [value]="branch.branchId">
+                                    {{ branch.branchName }} - {{ branch.branchId }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="createForm.get('branchNumber')?.invalid">
+                                {{ createForm.get('branchNumber')!.errors | errorMessages }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>יתרה</mat-label>
+                            <input matInput class="sign-number-direction" type="number" formControlName="balance"
+                                [appMaxDigits]="23">
+                            <mat-error *ngIf="createForm.get('balance')?.invalid">
+                                {{ createForm.get('balance')!.errors | errorMessages }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>מסגרת חשבון</mat-label>
+                            <input matInput class="sign-number-direction" type="number" formControlName="overdraftLimit"
+                                [appMaxDigits]="13">
+                            <mat-error *ngIf="createForm.get('overdraftLimit')?.invalid">
+                                {{ createForm.get('overdraftLimit')!.errors | errorMessages }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">פרטים נוספים</div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>קבוצה</mat-label>
+                            <mat-select formControlName="qaGroup">
+                                <mat-option *ngFor="let group of qaGroups" [value]="group.value">{{ group.key
+                                    }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field>
+                            <mat-label>תפקיד</mat-label>
+                            <mat-select formControlName="role">
+                                <mat-option *ngFor="let role of roles" [value]="role.value">{{ role.key }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="createForm.get('role')?.invalid">
+                                {{ createForm.get('role')!.errors | errorMessages }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-start">
+            <button class="btn btn-primary" [disabled]="createForm.invalid" (click)="onSubmit()">צור חשבון</button>
+        </div>
+    </form>
+</div>

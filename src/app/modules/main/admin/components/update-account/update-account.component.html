@@ -1,1 +1,202 @@
-<p>update-account works!</p>
+<div class="container mt-4">
+    <h1>עדכון פרטי חשבון</h1>
+
+    <div class="alert alert-success" role="alert" *ngIf="action == 1">
+        הפרטים עודכנו בהצלחה!
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="errTxt">{{errTxt}}</div>
+
+    <form [formGroup]="updateForm">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <mat-label>מספר חשבון</mat-label>
+                            <input [appMaxDigits]="9" matInput type="number" formControlName="accountNumber">
+                            <mat-error *ngIf="updateForm.get('accountNumber')?.invalid">
+                                {{ updateForm.get('accountNumber')!.errors | errorMessages }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-start mb-3">
+            <button class="btn btn-primary" (click)="fetchAccountDetails()">חפש</button>
+        </div>
+
+        <div *ngIf="account">
+            <div class="card mb-3">
+                <div class="card-header">פרטים אישיים</div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>שם פרטי</mat-label>
+                                <input matInput formControlName="firstName" maxLength="50">
+                                <mat-error *ngIf="updateForm.get('firstName')?.invalid">
+                                    {{ updateForm.get('firstName')!.errors | errorMessages }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>שם משפחה</mat-label>
+                                <input matInput formControlName="lastName" maxLength="50">
+                                <mat-error *ngIf="updateForm.get('lastName')?.invalid">
+                                    {{ updateForm.get('lastName')!.errors | errorMessages }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>אימייל</mat-label>
+                                <input matInput formControlName="mail" maxLength="100">
+                                <mat-error *ngIf="updateForm.get('mail')?.invalid">
+                                    {{ updateForm.get('mail')!.errors | errorMessages }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>טלפון</mat-label>
+                                <input matInput formControlName="phone" maxLength="15">
+                                <mat-error *ngIf="updateForm.get('phone')?.invalid">
+                                    {{ updateForm.get('phone')!.errors | errorMessages }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>טלפון בבית</mat-label>
+                                <input matInput formControlName="homePhone" maxLength="15">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>כתובת</mat-label>
+                                <input matInput formControlName="address" maxLength="100">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>תעודת זהות</mat-label>
+                                <input matInput type="number" formControlName="userId" [appMaxDigits]="9">
+                                <mat-error *ngIf="updateForm.get('userId')?.invalid">
+                                    {{ updateForm.get('userId')!.errors | errorMessages }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header">פרטי חשבון</div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>מספר סניף</mat-label>
+                                <mat-select formControlName="branchNumber">
+                                    <mat-option *ngFor="let branch of branches" [value]="branch.branchId">
+                                        {{ branch.branchName }} - {{ branch.branchId }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="updateForm.get('branchNumber')?.invalid">
+                                    {{ updateForm.get('branchNumber')!.errors | errorMessages }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>יתרה</mat-label>
+                                <input matInput class="sign-number-direction" type="number" formControlName="balance"
+                                    [appMaxDigits]="23">
+                                <mat-error *ngIf="updateForm.get('balance')?.invalid">
+                                    {{ updateForm.get('balance')!.errors | errorMessages }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>מסגרת חשבון</mat-label>
+                                <input matInput class="sign-number-direction" type="number"
+                                    formControlName="overdraftLimit" [appMaxDigits]="13">
+                                <mat-error *ngIf="updateForm.get('overdraftLimit')?.invalid">
+                                    {{ updateForm.get('overdraftLimit')!.errors | errorMessages }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header">פרטים נוספים</div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>קבוצה</mat-label>
+                                <mat-select formControlName="qaGroup">
+                                    <mat-option *ngFor="let group of qaGroups" [value]="group.value">{{ group.key
+                                        }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <mat-label>תפקיד</mat-label>
+                                <mat-select formControlName="role">
+                                    <mat-option *ngFor="let role of roles" [value]="role.value">{{ role.key
+                                        }}</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="updateForm.get('role')?.invalid">
+                                    {{ updateForm.get('role')!.errors | errorMessages }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-start">
+                <button class="btn btn-primary" [disabled]="updateForm.invalid" (click)="onSubmit()">עדכן</button>
+                <button class="btn btn-danger" (click)="openDeleteModal()">מחק</button>
+            </div>
+        </div>
+    </form>
+
+    <ng-template #deleteModal>
+        <div class="modal fade show d-block" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">מחיקת משתמש</h5>
+                        <button type="button" class="close" aria-label="Close" (click)="closeDeleteModal()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>האם אתה בטוח שברצונך למחוק את המשתמש הזה?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" (click)="deleteUser()">אישור</button>
+                        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">ביטול</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</div>

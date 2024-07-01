@@ -7,6 +7,7 @@ import { BankTransferDTO } from '../../../../models/BankTransfer.model';
 import { UserService } from '../../../../services/user.service';
 import { UtilsService } from '../../../../services/utils.service';
 import { ActionType } from '../../../../models/enums.model';
+import { ListsService } from '../../../../services/lists.service';
 
 @Component({
   selector: 'app-bank-transfer',
@@ -20,24 +21,12 @@ export class BankTransferComponent implements OnInit {
   action: ActionType = ActionType.None;
 
   transferForm!: FormGroup;
-  transferPurposes: KeyValue<number, string>[] = [
-    { "key": 1, "value": "תשלום" },
-    { "key": 2, "value": "שכר דירה" },
-    { "key": 3, "value": "החזר חוב" },
-    { "key": 4, "value": "הלוואה" },
-    { "key": 5, "value": "ועד בית" },
-    { "key": 6, "value": "מזונות" },
-    { "key": 7, "value": "משכורת" },
-    { "key": 8, "value": "קרוב משפחה" },
-    { "key": 9, "value": "שכר לימוד" },
-    { "key": 10, "value": "מיסי חבר" },
-    { "key": 11, "value": "תרומה" },
-    { "key": 99, "value": "אחר" }
-  ];
+  transferPurposes: KeyValue<number, string>[] = this.listsService.getTransferPurposes();
 
   constructor(
     private formBuilder: FormBuilder,
     private currencyPipe: CurrencyPipe,
+    private listsService: ListsService,
     private apiService: ApiService,
     private userService: UserService,
     private utilsService: UtilsService
@@ -106,7 +95,7 @@ export class BankTransferComponent implements OnInit {
   }
 
   private loadBanks(): void {
-    this.apiService.getBanks().subscribe(banks => {
+    this.listsService.getBanks().subscribe(banks => {
       this.banks = banks;
     });
   }
@@ -121,7 +110,7 @@ export class BankTransferComponent implements OnInit {
 
   private loadBranches(bankId: number): void {
     if (bankId) {
-      this.apiService.getBranches(bankId).subscribe(branches => {
+      this.listsService.getBranches(bankId).subscribe(branches => {
         this.branches = branches;
       });
     }

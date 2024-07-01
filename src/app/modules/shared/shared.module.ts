@@ -14,10 +14,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MaxDigitsDirective } from './directives/max-digits.directive';
+import { ErrorMessagesPipe } from './pipes/error-messages.pipe';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    MaxDigitsDirective,
+    ErrorMessagesPipe
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -52,6 +57,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSelectModule,
     MatAutocompleteModule,
     MatDialogModule,
+    MaxDigitsDirective,
+    ErrorMessagesPipe,
   ]
 })
 export class SharedModule { }

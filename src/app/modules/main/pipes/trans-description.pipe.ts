@@ -31,6 +31,11 @@ export class TransDescriptionPipe implements PipeTransform {
           return `משיכת פקדון של  ${value.counterpartyAccountName}`;
         return `משיכת פקדון`; // regular user
 
+      case TransactionType.UpdateDeposit:
+        if (value.accountNumber == Consts.accountNumberAdmin)
+          return `פעולת חסכון של  ${value.counterpartyAccountName}`;
+        return `חסכון`; // regular user
+
       case TransactionType.Fee:
         if (value.accountNumber == Consts.accountNumberAdmin)
           return `קבלת עמלה של ${value.counterpartyAccountName}`;

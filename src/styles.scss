@@ -45,5 +45,20 @@ body {
 }
 
 mat-form-field {
-    width: 100%;
+    width: 95%;
+}
+
+.text-input-right {
+    text-align: right;
+}
+
+.sign-number-direction {
+    direction: ltr;
+    text-align: right;
+}
+
+.modal {
+    display: block;
+    background: rgba(0, 0, 0, 0.5);
+    /* Adds a dark overlay */
 }

@@ -1,1 +1,79 @@
-<h1>אזור אישי</h1>
+<div class="container mt-4" *ngIf="account">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h1 class="card-title">אזור אישי</h1>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <div class="balance-box">
+                        <strong>יתרה בחשבון:</strong>
+                        <span dir="ltr" class="balance-amount" [class.text-danger]="account.balance < 0"
+                            [class.text-success]="account.balance > 0"> ₪ {{ account.balance | number }} </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>שם פרטי:</strong> {{ account.firstName }}
+                </div>
+                <div class="col-md-6">
+                    <strong>שם משפחה:</strong> {{ account.lastName }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>ת"ז:</strong> {{ account.userId }}
+                </div>
+                <div class="col-md-6">
+                    <strong>אימייל:</strong> {{ account.mail }}
+                </div>
+
+            </div>
+
+            <div class="row mb-3">
+
+                <div class="col-md-6">
+                    <strong>מספר חשבון:</strong> {{ account.accountNumber }}
+                </div>
+                <div class="col-md-6">
+                    <strong>מספר סניף:</strong> {{ account.branchNumber }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>טלפון:</strong> {{ account.phone }}
+                </div>
+                <div class="col-md-6">
+                    <strong>טלפון בבית:</strong> {{ account.homePhone }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>כתובת:</strong> {{ account.address }}
+                </div>
+                <div class="col-md-6">
+                    <strong>קבוצה:</strong>
+                    <ng-container *ngIf="account.qaGroup"> {{ account.qaGroup }} </ng-container>
+                    <ng-container *ngIf="!account.qaGroup"> אינך שייך לקבוצה כלשהי </ng-container>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>מסגרת חשבון:</strong> {{ (-account.overdraftLimit) | number }} ₪
+                </div>
+            </div>
+            <div class="row" *ngIf="account.role == Role.admin">
+                <div class="col-md-12">
+                    <strong>זה חשבון מנהל</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="!account">
+    <!-- <mat-progress-spinner mode="indeterminate"></mat-progress-spinner> -->
+    <p>Loading account details...</p>
+</div>

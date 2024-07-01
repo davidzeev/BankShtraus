@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Account, LoginAccount } from '../../../../models/user.model';
+import { Account } from '../../../../models/user.model';
 import { UserService } from '../../../../services/user.service';
 import { RoutingUrl } from '../../../../models/routing.model';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ import { UtilsService } from '../../../../services/utils.service';
 export class LoginComponent {
   submit = false;
   public loginForm!: FormGroup;
+  public hidePassword: boolean = true;
 
   constructor(private fb: FormBuilder,
     private userSrv: UserService,
@@ -27,6 +28,7 @@ export class LoginComponent {
     });
     this.autoFill();
   }
+
   get form() { return this.loginForm.controls };
 
   public tryLogin(): void {
