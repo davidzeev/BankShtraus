@@ -27,7 +27,9 @@ app-root,
     justify-content: center;
     align-items: center;
     width: 100%;
+    position: relative;
 }
+
 
 .footer {
     height: 3rem;
@@ -37,58 +39,6 @@ app-root,
     justify-content: center;
     align-items: center;
     background-size: cover;
-}
-
-.footer a {
-    color: #ffffff;
-}
-
-.header {
-    height: 4rem;
-    width: 100%;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-size: cover;
-}
-
-
-.banner-container {
-    display: flex;
-    justify-content: space-between;
-    margin: 0;
-}
-
-.banner-text {
-    text-align: center;
-    align-self: center;
-}
-
-.banner-image {
-    position: relative;
-    max-width: 100%;
-    height: 4rem;
-    opacity: 0.5;
-}
-
-.page-container {
-    position: relative;
-    // min-height: 100vh;
-}
-
-
-.footer {
-    bottom: 0;
-    height: 3rem;
-    width: 100%;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-size: cover;
-    position: fixed;
-    z-index: 9999;
 
     a {
         color: #ffffff;

@@ -1,37 +1,37 @@
 <div class="container center-container">
-
-    <div class="login-container">
-        <h2>התחברות</h2>
-        <form [formGroup]="loginForm" (keyup.enter)="tryLogin()">
-            <mat-form-field appearance="fill" color="primary" hideRequiredMarker>
-                <mat-label>קוד משתמש</mat-label>
-                <input matInput formControlName="userCode" id="userCode" />
-                <mat-error *ngIf="loginForm.get('userCode')?.invalid">יש למלא קוד משתמש</mat-error>
-            </mat-form-field>
-
-            <br />
-
-            <mat-form-field appearance="fill" color="primary" hideRequiredMarker>
-                <mat-label>תעודת זהות (9 ספרות)</mat-label>
-                <input matInput formControlName="userId" type="number" id="userId" />
-                <mat-error *ngIf="loginForm.get('userId')?.invalid">יש למלא תעודת זהות</mat-error>
-            </mat-form-field>
-
-            <br />
-
-            <mat-form-field appearance="fill" color="primary" hideRequiredMarker>
-                <mat-label>סיסמה</mat-label>
-                <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" id="password"
-                    autocomplete="new-password" />
-                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" aria-label="הצג סיסמה"
-                    [attr.aria-pressed]="hidePassword">
-                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-                <mat-error *ngIf="loginForm.get('password')?.invalid">יש למלא סיסמה</mat-error>
-            </mat-form-field>
-            <br />
-
-            <button (click)="tryLogin()">התחבר</button>
-        </form>
+    <div class="login-content">
+        <img src="assets/presenter_slogen.png" alt="Presenter" class="presenter-image d-md-block d-none" />
+        <div class="login-container">
+            <div class="header-container">
+                <h2>כניסה לחשבון</h2>
+                <img src="assets/logo_natural.png" alt="Logo" class="logo-image " />
+            </div>
+            <form [formGroup]="loginForm" (keyup.enter)="tryLogin()">
+                <mat-form-field appearance="fill" color="primary" hideRequiredMarker>
+                    <mat-label>קוד משתמש</mat-label>
+                    <input matInput formControlName="userCode" id="userCode" />
+                    <mat-error *ngIf="loginForm.get('userCode')?.invalid">יש למלא קוד משתמש</mat-error>
+                </mat-form-field>
+                <br />
+                <mat-form-field appearance="fill" color="primary" hideRequiredMarker>
+                    <mat-label>תעודת זהות (9 ספרות)</mat-label>
+                    <input matInput formControlName="userId" type="number" id="userId" />
+                    <mat-error *ngIf="loginForm.get('userId')?.invalid">יש למלא תעודת זהות</mat-error>
+                </mat-form-field>
+                <br />
+                <mat-form-field appearance="fill" color="primary" hideRequiredMarker>
+                    <mat-label>סיסמה</mat-label>
+                    <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" id="password"
+                        autocomplete="new-password" />
+                    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" aria-label="הצג סיסמה"
+                        [attr.aria-pressed]="hidePassword">
+                        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="loginForm.get('password')?.invalid">יש למלא סיסמה</mat-error>
+                </mat-form-field>
+                <br />
+                <button (click)="tryLogin()" class="login-button">התחבר</button>
+            </form>
+        </div>
     </div>
 </div>
