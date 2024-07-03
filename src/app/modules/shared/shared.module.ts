@@ -16,6 +16,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MaxDigitsDirective } from './directives/max-digits.directive';
 import { ErrorMessagesPipe } from './pipes/error-messages.pipe';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { ErrorMessagesPipe } from './pipes/error-messages.pipe';
     MatSelectModule,
     MatAutocompleteModule,
     MatDialogModule,
+    NgbTooltipModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -59,6 +61,7 @@ import { ErrorMessagesPipe } from './pipes/error-messages.pipe';
     MatDialogModule,
     MaxDigitsDirective,
     ErrorMessagesPipe,
+    NgbTooltipModule,
   ]
 })
 export class SharedModule { }

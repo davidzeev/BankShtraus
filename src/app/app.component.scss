@@ -1,3 +1,15 @@
+html,
+body,
+app-root,
+.page-layout {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
 .header {
     height: 4rem;
     width: 100%;
@@ -5,13 +17,46 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-size: cover;
+}
+
+.page-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.footer {
+    height: 3rem;
+    width: 100%;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+}
+
+.footer a {
+    color: #ffffff;
+}
+
+.header {
+    height: 4rem;
+    width: 100%;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
 }
 
 
 .banner-container {
     display: flex;
     justify-content: space-between;
-    background-color: #8dc1f9;
     margin: 0;
 }
 
@@ -29,16 +74,11 @@
 
 .page-container {
     position: relative;
-    min-height: 100vh;
-}
-
-.content-wrap {
-    padding-bottom: 3rem;
+    // min-height: 100vh;
 }
 
 
 .footer {
-    position: sticky;
     bottom: 0;
     height: 3rem;
     width: 100%;
@@ -46,6 +86,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-size: cover;
+    position: fixed;
+    z-index: 9999;
 
     a {
         color: #ffffff;

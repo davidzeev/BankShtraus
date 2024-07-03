@@ -1,21 +1,19 @@
-<header class="header" style=" background-image: url('assets/רקע.jpg');">
+<div class="page-layout">
+    <header class="header" style="background-image: url('assets/background.jpg');">
+        <div class="banner-text" style="height: 100%; width: 100%;">
+            <img src="assets/logo_white_title.png" alt="logo" class="logo">
+        </div>
+    </header>
 
-    <div class="banner-text" style="height: 100%; width: 100%;">
-        <!-- <img src="assets/רקע.jpg" alt="background" style="height: 100%; width: 100%"> -->
-        <h1 class="withColor">בנק שטראוס</h1>
+    <div class="page-container">
+        <div class="w-100 h-100">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 
-</header>
-<div class="page-container">
-    <div class="content-wrap">
-        <router-outlet></router-outlet>
-    </div>
+    <footer class="footer" id="footer" style="background-image: url('assets/background.jpg');">
+        <a href=""> דף הבית </a>
+        <pre class="mt-3"> | </pre>
+        <span> כל הזכויות שמורות © </span>
+    </footer>
 </div>
-
-<footer class="footer" id="footer" style="background-image: url('assets/רקע.jpg');">
-    <a href=""> דף הבית </a>
-    <pre class="mt-3"> | </pre>
-    <span> כל הזכויות שמורות © </span>
-</footer>
-
-<mat-spinner *ngIf="spinnerLoading"></mat-spinner>

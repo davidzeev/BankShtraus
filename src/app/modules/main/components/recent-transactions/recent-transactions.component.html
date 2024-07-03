@@ -14,7 +14,7 @@
                 <mat-error *ngIf="transForm.get('month')?.invalid">יש לבחור תחום</mat-error>
             </mat-form-field>
             <div class="col-1">
-                <img src="assets/excel-icon.svg" class="icons" alt="יצא לאקסל" title="יצא לאקסל" role="button"
+                <img src="assets/excel-icon.svg" class="icons" alt="יצא לאקסל" ngbTooltip="יצא לאקסל" role="button"
                     (click)="exportToExcel()">
             </div>
 
