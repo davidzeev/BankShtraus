@@ -1,34 +1,36 @@
-<h1>תפריט הפקדונות</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">תפריט הפקדונות</h1>
 
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>בחר פעולה</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <div class="row">
-            <div class="col">
-                <button mat-button class="menu-button" (click)="clickAction(1)">
-                    <mat-icon>account_balance</mat-icon>
-                    הפקדונות/חסכונות שלי
-                </button>
-            </div>
-            <div class="col">
-                <button mat-button class="menu-button col" (click)="clickAction(2)">
-                    <mat-icon>add_circle</mat-icon>
-                    יצירת פקדון/חסכון חדש
-                </button>
-            </div>
-            <!-- <div class="col">
+    <mat-card class="mb-4">
+        <mat-card-header>
+            <mat-card-title>בחר פעולה</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <button mat-button class="menu-button" (click)="clickAction(1)">
+                        <mat-icon>account_balance</mat-icon>
+                        הפקדונות/חסכונות שלי
+                    </button>
+                </div>
+                <div class="col">
+                    <button mat-button class="menu-button col" (click)="clickAction(2)">
+                        <mat-icon>add_circle</mat-icon>
+                        יצירת פקדון/חסכון חדש
+                    </button>
+                </div>
+                <!-- <div class="col">
                 <button mat-button class="menu-button col" (click)="clickAction(3)">
                     <mat-icon>check_circle</mat-icon>
                     פקדונות/חסכונות פעילים
                 </button>
             </div> -->
-        </div>
-    </mat-card-content>
-    <mat-card-footer></mat-card-footer>
-</mat-card>
+            </div>
+        </mat-card-content>
+        <mat-card-footer></mat-card-footer>
+    </mat-card>
 
-<app-my-deposits *ngIf="action === 1"></app-my-deposits>
-<app-create-deposit *ngIf="action === 2"></app-create-deposit>
-<!-- <app-active-deposits *ngIf="action === 3"></app-active-deposits> -->
+    <app-my-deposits *ngIf="action === 1"></app-my-deposits>
+    <app-create-deposit *ngIf="action === 2"></app-create-deposit>
+    <!-- <app-active-deposits *ngIf="action === 3"></app-active-deposits> -->
+</div>

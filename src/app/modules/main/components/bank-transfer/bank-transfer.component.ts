@@ -46,7 +46,7 @@ export class BankTransferComponent implements OnInit {
       bankID: ['', Validators.required],
       branchID: ['', Validators.required],
       accountNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      amount: ['', [Validators.required, Validators.max(10000)]],
+      amount: ['', [Validators.required, Validators.min(1), Validators.max(10000)]],
       transferPurpose: ['', Validators.required],
       otherPurpose: ['']
     });
@@ -57,6 +57,7 @@ export class BankTransferComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    debugger;
     if (this.transferForm.invalid) {
       return;
     }
