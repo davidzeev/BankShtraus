@@ -10,7 +10,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { UtilsService } from '../../../../services/utils.service';
 import { LabelValue } from '../../../../models/labelValue.model';
 import { Subscription } from 'rxjs';
-import { IncomeExpenseType, TransactionType } from '../../../../models/enums.model';
 import { MatDialog } from '@angular/material/dialog';
 import { TransDialogComponent } from '../trans-dialog/trans-dialog.component';
 
@@ -49,6 +48,7 @@ export class RecentTransactionsComponent implements AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
+    this.dataSource = new MatTableDataSource<Transaction>([]);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.getTranscationFromServer();
@@ -75,7 +75,7 @@ export class RecentTransactionsComponent implements AfterViewInit, OnDestroy {
 
     this.apiService.getTransaction(querySearch).subscribe({
       next: (transactions: Transaction[]) => {
-        this.dataSource = new MatTableDataSource<Transaction>(transactions);
+        this.dataSource.data = transactions;
       },
       error: (error) => {
         this.utilsService.handleServerError(error);
