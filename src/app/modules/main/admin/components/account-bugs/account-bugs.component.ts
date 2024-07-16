@@ -4,13 +4,13 @@ import { Subscription } from 'rxjs';
 import { BugDTO, AccountBug, UpdateAccountBugsDTO, BugsAndBugsAccountDTO } from '../../../../../models/Bugs.model';
 import { BugsService } from '../../../../../services/bugs.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-account-bugs',
   templateUrl: './account-bugs.component.html',
   styleUrl: './account-bugs.component.scss'
 })
-
 export class AccountBugsComponent implements OnInit, OnDestroy {
   @Input() accountNumber!: number;
   public bugSettingsForm!: FormGroup;
@@ -18,7 +18,7 @@ export class AccountBugsComponent implements OnInit, OnDestroy {
   public dataSource = new MatTableDataSource<any>();
   public displayedColumns: string[] = ['bugId', 'name', 'description', 'bugType', 'frequency', 'data', 'actions'];
 
-  constructor(private fb: FormBuilder, private bugsService: BugsService) { }
+  constructor(private fb: FormBuilder, private bugsService: BugsService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.bugSettingsForm = this.fb.group({
@@ -82,7 +82,7 @@ export class AccountBugsComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.bugsService.updateBugsAccount(updateAccountBugsDto).subscribe({
         next: () => {
-          alert('הרשימה עודכנה בהצלחה');
+          this.snackBar.open('הרשימה עודכנה בהצלחה', 'סגור', { duration: 3000 });
         },
         error: (error) => {
           console.error('Error updating settings:', error);

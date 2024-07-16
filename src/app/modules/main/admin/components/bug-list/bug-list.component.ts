@@ -111,11 +111,11 @@ export class BugListComponent implements OnInit, AfterViewInit, OnDestroy {
     const control = this.getFormControl(index, controlName);
     return control.invalid && (control.dirty || control.touched);
   }
+
   public isInvalidGroup(index: number): boolean {
     const bugsFormArray = this.bugsForm.get('bugs') as FormArray;
     return (bugsFormArray.at(index) as FormGroup).invalid;
   }
-
 
   public get bugs(): FormArray {
     return this.bugsForm.get('bugs') as FormArray;

@@ -58,9 +58,9 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
             </mat-card-content>
-            <mat-card-footer>
-                <button class="btn btn-primary" (click)="saveSettings()">עדכן</button>
-            </mat-card-footer>
         </mat-card>
+        <div class="text-start mt-2">
+            <button class="btn btn-primary " (click)="saveSettings()">עדכן</button>
+        </div>
     </form>
 </div>
