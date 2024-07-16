@@ -1,36 +1,32 @@
 <div class="container mt-4">
     <h1 class="mb-4">תפריט הפקדונות</h1>
 
-    <mat-card class="mb-4">
-        <mat-card-header>
-            <mat-card-title>בחר פעולה</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div class="row">
-                <div class="col">
-                    <button mat-button class="menu-button" (click)="clickAction(1)">
-                        <mat-icon>account_balance</mat-icon>
-                        הפקדונות/חסכונות שלי
-                    </button>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="bi bi-safe display-1 mb-3"></i>
+                    <h5 class="card-title">הפקדונות/חסכונות שלי</h5>
+                    <input type="radio" class="btn-check" name="depositAction" id="myDeposits" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="myDeposits" (click)="clickAction(1)">בחר</label>
                 </div>
-                <div class="col">
-                    <button mat-button class="menu-button col" (click)="clickAction(2)">
-                        <mat-icon>add_circle</mat-icon>
-                        יצירת פקדון/חסכון חדש
-                    </button>
-                </div>
-                <!-- <div class="col">
-                <button mat-button class="menu-button col" (click)="clickAction(3)">
-                    <mat-icon>check_circle</mat-icon>
-                    פקדונות/חסכונות פעילים
-                </button>
-            </div> -->
             </div>
-        </mat-card-content>
-        <mat-card-footer></mat-card-footer>
-    </mat-card>
+        </div>
 
-    <app-my-deposits *ngIf="action === 1"></app-my-deposits>
-    <app-create-deposit *ngIf="action === 2"></app-create-deposit>
-    <!-- <app-active-deposits *ngIf="action === 3"></app-active-deposits> -->
+        <div class="col">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="bi bi-plus-circle display-1 mb-3"></i>
+                    <h5 class="card-title">יצירת פקדון/חסכון חדש</h5>
+                    <input type="radio" class="btn-check" name="depositAction" id="createDeposit" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="createDeposit" (click)="clickAction(2)">בחר</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <app-my-deposits *ngIf="action === 1"></app-my-deposits>
+        <app-create-deposit *ngIf="action === 2"></app-create-deposit>
+    </div>
 </div>
