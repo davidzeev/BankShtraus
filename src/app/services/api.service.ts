@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap, catchError, finalize } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import { Account, CreateAccountRequestDTO, LoginAccount, UpdateAccountRequestDTO } from '../models/user.model';
 import { Transaction, TransactionAccount } from '../models/TransferData.model';
 import { SpinnerService } from './spinner.service';
 import { Bank, Branch } from '../models/BankBranch.model';
 import { BankTransferDTO } from '../models/BankTransfer.model';
 import { DepositTypeDTO, DepositsAccountDTO, DepositsDTO } from '../models/Deposits.model';
-import { of } from 'rxjs';
+import { AccountBug, BugDTO, BugsAndBugsAccountDTO, UpdateAccountBugsDTO } from '../models/Bugs.model';
 
 @Injectable({
   providedIn: 'root'
@@ -121,4 +121,47 @@ export class ApiService {
       finalize(() => this.spinnerService.stopLoading())
     );
   }
+
+  // Bugs Endpoints
+
+  public getBugList(): Observable<BugDTO[]> {
+    const url = `${this.apiUrl}/Bugs/GetBugList`;
+    this.spinnerService.startLoading();
+    return this.httpClient.get<BugDTO[]>(url).pipe(
+      finalize(() => this.spinnerService.stopLoading())
+    );
+  }
+
+  public updateBug(id: string, bug: BugDTO): Observable<any> {
+    const url = `${this.apiUrl}/Bugs/UpdateBug/${id}`;
+    this.spinnerService.startLoading();
+    return this.httpClient.put<any>(url, bug).pipe(
+      finalize(() => this.spinnerService.stopLoading())
+    );
+  }
+
+  public getUserBugs(accountNumber: number): Observable<AccountBug[]> {
+    const url = `${this.apiUrl}/Bugs/GetUserBugs/${accountNumber}`;
+    this.spinnerService.startLoading();
+    return this.httpClient.get<AccountBug[]>(url).pipe(
+      finalize(() => this.spinnerService.stopLoading())
+    );
+  }
+
+  public updateBugsAccount(updateAccountBugsDto: UpdateAccountBugsDTO): Observable<any> {
+    const url = `${this.apiUrl}/Bugs/UpdateBugsAccount`;
+    this.spinnerService.startLoading();
+    return this.httpClient.post<any>(url, updateAccountBugsDto).pipe(
+      finalize(() => this.spinnerService.stopLoading())
+    );
+  }
+
+  public getBugsAndBugsAccount(accountNumber: number): Observable<BugsAndBugsAccountDTO> {
+    const url = `${this.apiUrl}/Bugs/GetBugsAndBugsAccount/${accountNumber}`;
+    this.spinnerService.startLoading();
+    return this.httpClient.get<BugsAndBugsAccountDTO>(url).pipe(
+      finalize(() => this.spinnerService.stopLoading())
+    );
+  }
+
 }

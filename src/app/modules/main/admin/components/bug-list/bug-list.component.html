@@ -1,1 +1,112 @@
-<p>bug-list works!</p>
+<div class="container mt-4">
+    <h1 class="mb-4">ניהול שגיאות</h1>
+    <form [formGroup]="bugsForm">
+        <mat-card>
+            <mat-card-header>
+                <h2>רשימת שגיאות</h2>
+            </mat-card-header>
+            <mat-card-content>
+                <table mat-table [dataSource]="dataSource" matSort class="table table-striped mat-elevation-z8">
+
+                    <ng-container matColumnDef="bugId">
+                        <th mat-header-cell *matHeaderCellDef>שגיאה</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <span>{{ getFormControl(i, 'bugId').value }}</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>שם</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <input type="text" class="form-control" [formControl]="getFormControl(i, 'name')"
+                                [class.is-invalid]="isInvalid(i, 'name')" maxlength="80">
+                            <div class="invalid-feedback" *ngIf="isInvalid(i, 'name')">
+                                {{ getFormControl(i, 'name')!.errors | errorMessages }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="description">
+                        <th mat-header-cell *matHeaderCellDef>תיאור</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <input type="text" class="form-control" [formControl]="getFormControl(i, 'description')"
+                                [class.is-invalid]="isInvalid(i, 'description')" maxlength="150">
+                            <div class="invalid-feedback" *ngIf="isInvalid(i, 'description')">
+                                {{ getFormControl(i, 'description')!.errors | errorMessages }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="bugType">
+                        <th mat-header-cell *matHeaderCellDef>סוג שגיאה</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <span>{{ getFormControl(i, 'bugType').value | bugType }}</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="difficultyLevel">
+                        <th mat-header-cell *matHeaderCellDef>רמת קושי</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <select class="form-control" [formControl]="getFormControl(i, 'difficultyLevel')"
+                                [class.is-invalid]="isInvalid(i, 'difficultyLevel')">
+                                <option *ngFor="let option of difficultyOptions" [value]="option">{{ option }}</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="isInvalid(i, 'difficultyLevel')">
+                                {{ getFormControl(i, 'difficultyLevel')!.errors | errorMessages }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="version">
+                        <th mat-header-cell *matHeaderCellDef>גרסה</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <select class="form-control" [formControl]="getFormControl(i, 'version')"
+                                [class.is-invalid]="isInvalid(i, 'version')">
+                                <option *ngFor="let option of difficultyOptions" [value]="option">{{ option }}</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="isInvalid(i, 'version')">
+                                {{ getFormControl(i, 'version')!.errors | errorMessages }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="frequency">
+                        <th mat-header-cell *matHeaderCellDef>תדירות</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <input type="number" class="form-control" [formControl]="getFormControl(i, 'frequency')"
+                                min="0" max="50" [class.is-invalid]="isInvalid(i, 'frequency')">
+                            <div class="invalid-feedback" *ngIf="isInvalid(i, 'frequency')">
+                                {{ getFormControl(i, 'frequency')!.errors | errorMessages }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="data">
+                        <th mat-header-cell *matHeaderCellDef>שדה נוסף</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <input type="number" class="form-control" [formControl]="getFormControl(i, 'data')"
+                                min="-99999999" max="99999999" [class.is-invalid]="isInvalid(i, 'data')"
+                                ngbTooltip="שדה זה הוא השלמה לשגיאות שצריכות תוספת מידע כמו כמות או סכום">
+                            <div class="invalid-feedback" *ngIf="isInvalid(i, 'data')">
+                                {{ getFormControl(i, 'data')!.errors | errorMessages }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>פעולות</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <button class="btn btn-primary" (click)="saveBug(i)"
+                                [disabled]="!isDirty(i) || isInvalidGroup(i)">עדכן</button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons></mat-paginator>
+            </mat-card-content>
+            <mat-card-footer></mat-card-footer>
+        </mat-card>
+    </form>
+</div>

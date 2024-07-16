@@ -7,6 +7,8 @@ import { UpdateAccountComponent } from './components/update-account/update-accou
 import { UpdateGroupComponent } from './components/update-group/update-group.component';
 import { BugListComponent } from './components/bug-list/bug-list.component';
 import { SharedModule } from '../../shared/shared.module';
+import { BugTypePipe } from './pipes/bug-type.pipe';
+import { AccountBugsComponent } from './components/account-bugs/account-bugs.component';
 
 
 @NgModule({
@@ -16,6 +18,8 @@ import { SharedModule } from '../../shared/shared.module';
     UpdateAccountComponent,
     UpdateGroupComponent,
     BugListComponent,
+    BugTypePipe,
+    AccountBugsComponent,
   ],
   imports: [
     CommonModule,

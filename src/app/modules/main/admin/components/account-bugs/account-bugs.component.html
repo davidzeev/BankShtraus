@@ -1,0 +1,66 @@
+<div class="container mt-4">
+    <h1 class="mb-4">הגדרת באגים</h1>
+    <form [formGroup]="bugSettingsForm">
+        <mat-card>
+            <mat-card-header></mat-card-header>
+            <mat-card-content>
+                <table mat-table [dataSource]="dataSource" matSort class="table table-striped mat-elevation-z8">
+                    <ng-container matColumnDef="bugId">
+                        <th mat-header-cell *matHeaderCellDef>שגיאה</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <span>{{ getFormControl(i, 'bugId').value }}</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>שם</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <span>{{ getFormControl(i, 'name').value }}</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="description">
+                        <th mat-header-cell *matHeaderCellDef>תיאור</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <span>{{ getFormControl(i, 'description').value }}</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="bugType">
+                        <th mat-header-cell *matHeaderCellDef>סוג שגיאה</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <span>{{ getFormControl(i, 'bugType').value | bugType }}</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="frequency">
+                        <th mat-header-cell *matHeaderCellDef>תדירות</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <input type="number" [formControl]="getFormControl(i, 'frequency')" class="form-control">
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="data">
+                        <th mat-header-cell *matHeaderCellDef>מידע נוסף</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <input type="number" [formControl]="getFormControl(i, 'data')" class="form-control">
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>פעיל</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <input type="checkbox" [formControl]="getFormControl(i, 'isAccountBug')">
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </mat-card-content>
+            <mat-card-footer>
+                <button class="btn btn-primary" (click)="saveSettings()">עדכן</button>
+            </mat-card-footer>
+        </mat-card>
+    </form>
+</div>

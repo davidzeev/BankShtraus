@@ -177,6 +177,8 @@
         </div>
     </form>
 
+    <app-account-bugs *ngIf="account" [accountNumber]="account.accountNumber"></app-account-bugs>
+
     <ng-template #deleteModal>
         <div class="modal fade show d-block" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
